@@ -10,7 +10,7 @@
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
 #import <LVTwitterOAuthClient/LVTwitterOAuthClient.h>
-#import <AFOAuth1Client/AFOAuth1Client.h>
+#import <AF2OAuth1Client/AF2OAuth1Client.h>
 #import <AFNetworking/AFNetworking.h>
 #import "PFTwitterAccountSelectDialog.h"
 
@@ -105,7 +105,9 @@ static PFTwitterSignOn *__sharedInstance;
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:PF_TWITTER_SIGN_ON_LOADING_STARTED_NOTIFICATION object:nil userInfo:@{@"action" : @"fetchCredentials"}];
     });
-    [twitterClient requestTokensForAccount:account withHandler:^(NSString *oAuthAccessToken, NSString *oAuthTokenSecret, NSError *error){
+    [twitterClient requestTokensForAccount:account completionBlock:^(NSDictionary *oAuthResponse, NSError *error) {
+        NSString *oAuthAccessToken = oAuthResponse[kLVOAuthAccessTokenKey];
+        NSString *oAuthTokenSecret = oAuthResponse[kLVOAuthTokenSecretKey];
         if (!oAuthAccessToken || !oAuthTokenSecret) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:PF_TWITTER_SIGN_ON_LOADING_ENDED_NOTIFICATION object:nil userInfo:@{@"action" : @"fetchCredentials"}];
@@ -146,7 +148,7 @@ static PFTwitterSignOn *__sharedInstance;
 + (void)signInWithWebView:(twitterAuthenticationCallback)callback
 {
     PFTwitterSignOn *signOnInstance = [self sharedInstance];
-    AFOAuth1Client *twitterClient = [[AFOAuth1Client alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.twitter.com/"] key:signOnInstance.consumerKey secret:signOnInstance.consumerSecret];
+    AF2OAuth1Client *twitterClient = [[AF2OAuth1Client alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.twitter.com/"] key:signOnInstance.consumerKey secret:signOnInstance.consumerSecret];
     // read a valid callback URL from info.plist
     NSBundle *mainBundle = [NSBundle mainBundle];
     NSString *urlScheme = [[[[mainBundle objectForInfoDictionaryKey:@"CFBundleURLTypes"] firstObject] objectForKey:@"CFBundleURLSchemes"] firstObject];
@@ -155,9 +157,9 @@ static PFTwitterSignOn *__sharedInstance;
         [[NSNotificationCenter defaultCenter] postNotificationName:PF_TWITTER_SIGN_ON_LOADING_STARTED_NOTIFICATION object:nil userInfo:@{@"action" : @"fetchCredentialsViaWeb"}];
     });
     // Your application will be sent to the background until the user authenticates, and then the app will be brought back using the callback URL
-    [twitterClient authorizeUsingOAuthWithRequestTokenPath:@"oauth/request_token" userAuthorizationPath:@"oauth/authorize" callbackURL:callbackURL accessTokenPath:@"oauth/access_token" accessMethod:@"POST" scope:nil success:^(AFOAuth1Token *accessToken, id responseObject) {
-        [twitterClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
-        [twitterClient getPath:kUserInfoURL parameters:kUserInfoParams success:^(AFHTTPRequestOperation *operation, NSDictionary *userInfo){
+    [twitterClient authorizeUsingOAuthWithRequestTokenPath:@"oauth/request_token" userAuthorizationPath:@"oauth/authorize" callbackURL:callbackURL accessTokenPath:@"oauth/access_token" accessMethod:@"POST" scope:nil success:^(AF2OAuth1Token *accessToken, id responseObject) {
+        [twitterClient setResponseSerializer:[AFJSONResponseSerializer serializer]];
+        [twitterClient GET:kUserInfoURL parameters:kUserInfoParams success:^(AFHTTPRequestOperation *operation, NSDictionary *userInfo){
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:PF_TWITTER_SIGN_ON_LOADING_ENDED_NOTIFICATION object:nil userInfo:@{@"action" : @"fetchCredentialsViaWeb"}];
                 NSMutableDictionary *userData = [userInfo mutableCopy];
