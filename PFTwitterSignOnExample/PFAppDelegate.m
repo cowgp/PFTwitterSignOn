@@ -7,7 +7,7 @@
 //
 
 #import "PFAppDelegate.h"
-#import <AFOAuth1Client/AFOAuth1Client.h>
+#import <AF2OAuth1Client/AF2OAuth1Client.h>
 #import "PFTwitterAccountSelectDialog.h"
 #import <PFTwitterSignOn/PFTwitterSignOn.h>
 

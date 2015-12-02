@@ -20,8 +20,6 @@
 		F3B97B13188B30D0006439CD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3B97AFB188B30D0006439CD /* UIKit.framework */; };
 		F3B97B1B188B30D0006439CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F3B97B19188B30D0006439CD /* InfoPlist.strings */; };
 		F3B97B1D188B30D0006439CD /* PFTwitterSignOnExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F3B97B1C188B30D0006439CD /* PFTwitterSignOnExampleTests.m */; };
-		F3B97B29188B3364006439CD /* PFTwitterSignOn.m in Sources */ = {isa = PBXBuildFile; fileRef = F3B97B28188B3364006439CD /* PFTwitterSignOn.m */; };
-		F3B97B2C188B3ECE006439CD /* PFTwitterAccountSelectDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = F3B97B2B188B3ECE006439CD /* PFTwitterAccountSelectDialog.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +33,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3AD609120B874B5CB177D3A1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		2EE9A09DEB846EA18556DEA9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		95AED39F04CCC7CEAC0F4BCD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		ACCB770DAF4D4A86BC10BC9E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3B97AF4188B30D0006439CD /* PFTwitterSignOnExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PFTwitterSignOnExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3B97AF7188B30D0006439CD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -84,6 +83,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E4CFDC0F57F038EA945C85DC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				95AED39F04CCC7CEAC0F4BCD /* Pods.debug.xcconfig */,
+				2EE9A09DEB846EA18556DEA9 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		F3B97AEB188B30D0006439CD = {
 			isa = PBXGroup;
 			children = (
@@ -92,7 +100,7 @@
 				F3B97B16188B30D0006439CD /* PFTwitterSignOnExampleTests */,
 				F3B97AF6188B30D0006439CD /* Frameworks */,
 				F3B97AF5188B30D0006439CD /* Products */,
-				3AD609120B874B5CB177D3A1 /* Pods.xcconfig */,
+				E4CFDC0F57F038EA945C85DC /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -274,7 +282,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD479D5906444308AB00F733 /* Check Pods Manifest.lock */ = {
@@ -299,10 +307,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3B97B29188B3364006439CD /* PFTwitterSignOn.m in Sources */,
 				F3B97B08188B30D0006439CD /* PFAppDelegate.m in Sources */,
 				F3B97B04188B30D0006439CD /* main.m in Sources */,
-				F3B97B2C188B3ECE006439CD /* PFTwitterAccountSelectDialog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,7 +426,7 @@
 		};
 		F3B97B21188B30D0006439CD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3AD609120B874B5CB177D3A1 /* Pods.xcconfig */;
+			baseConfigurationReference = 95AED39F04CCC7CEAC0F4BCD /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -434,7 +440,7 @@
 		};
 		F3B97B22188B30D0006439CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3AD609120B874B5CB177D3A1 /* Pods.xcconfig */;
+			baseConfigurationReference = 2EE9A09DEB846EA18556DEA9 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
